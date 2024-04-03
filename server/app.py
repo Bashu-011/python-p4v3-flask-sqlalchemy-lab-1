@@ -21,6 +21,16 @@ def index():
     return make_response(body, 200)
 
 # Add views here
+@app.route('/earthquakes/magnitude/<float:magnitude>')
+def power(magnitude):
+    quakes = []
+    for quake in Earthquake.query.filter(Earthquake.magnitude >= magnitude).all():
+        quakes.append(quake.to_dict())
+    body = {'count': len(quakes),
+            'quakes': quakes
+            }
+    
+    return make_response(body, 200)
 
 
 if __name__ == '__main__':
